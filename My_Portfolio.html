@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Andhavarapu Vamsi | Automotive Embedded Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #FDF8F2;
+    --surface: #FFF9F3;
+    --card: #FFFFFF;
+    --accent: #C8501A;
+    --accent2: #E87B3E;
+    --accent-soft: #FDEEE5;
+    --text: #1A1207;
+    --text-muted: #6B5B45;
+    --text-light: #A08060;
+    --border: #EDE0D0;
+    --nav-bg: rgba(253,248,242,0.92);
+    --shadow: 0 2px 16px rgba(200,80,26,0.07);
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.1rem;
+    color: var(--accent); letter-spacing: -0.5px;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-muted);
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.3px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent); color: #fff !important;
+    padding: 8px 18px; border-radius: 8px;
+  }
+  .nav-cta:hover { background: #a8400e !important; color: #fff !important; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; }
+
+  /* ── SECTIONS ── */
+  section { padding: 96px 5vw; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700; color: var(--text);
+    line-height: 1.15; margin-bottom: 16px;
+  }
+  .section-sub {
+    color: var(--text-muted); font-size: 1rem;
+    max-width: 560px; margin-bottom: 48px;
+  }
+  .divider {
+    width: 48px; height: 3px;
+    background: var(--accent); border-radius: 2px;
+    margin-bottom: 48px;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding-top: 100px;
+    max-width: 1100px; margin: 0 auto;
+    gap: 60px;
+  }
+  .hero-text { flex: 1; }
+  .hero-greeting {
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .hero-greeting::before {
+    content: ''; width: 32px; height: 2px; background: var(--accent);
+  }
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 800; line-height: 1.08;
+    color: var(--text); margin-bottom: 12px;
+  }
+  .hero-name span { color: var(--accent); }
+  .hero-tagline {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--text-muted); font-weight: 400;
+    margin-bottom: 32px; max-width: 480px;
+  }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 14px 28px; border-radius: 10px;
+    text-decoration: none; font-weight: 600;
+    font-size: 0.9rem; transition: all 0.2s;
+    border: 2px solid var(--accent);
+  }
+  .btn-primary:hover { background: #a8400e; border-color: #a8400e; transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--accent);
+    padding: 14px 28px; border-radius: 10px;
+    text-decoration: none; font-weight: 600;
+    font-size: 0.9rem; transition: all 0.2s;
+    border: 2px solid var(--accent);
+  }
+  .btn-outline:hover { background: var(--accent-soft); transform: translateY(-2px); }
+
+  .hero-visual {
+    flex: 0 0 300px;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+  }
+  .hero-avatar {
+    width: 220px; height: 220px; border-radius: 50%;
+    background: var(--accent-soft);
+    border: 4px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 4rem; font-weight: 800;
+    color: var(--accent); overflow: hidden; position: relative;
+  }
+  .hero-avatar img { width: 100%; height: 100%; object-fit: cover; display: none; }
+  .hero-badge {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 20px;
+    text-align: center; box-shadow: var(--shadow);
+    font-size: 0.8rem; color: var(--text-muted);
+  }
+  .hero-badge strong { display: block; font-size: 1.1rem; color: var(--accent); font-family: 'Syne', sans-serif; }
+  .hero-stat-row { display: flex; gap: 12px; }
+
+  /* ── ABOUT ── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .about-bio { color: var(--text-muted); font-size: 0.97rem; line-height: 1.8; }
+  .about-bio p { margin-bottom: 16px; }
+  .about-bio p:last-child { margin-bottom: 0; }
+  .about-info { display: flex; flex-direction: column; gap: 14px; }
+  .info-item { display: flex; gap: 14px; align-items: flex-start; }
+  .info-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--accent-soft); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .info-label { font-size: 0.75rem; color: var(--text-light); font-weight: 500; margin-bottom: 2px; }
+  .info-value { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+  /* ── SKILLS ── */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px;
+    box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .skill-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(200,80,26,0.12); }
+  .skill-card-title {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.95rem; color: var(--text);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .skill-card-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--accent-soft); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag {
+    background: var(--accent-soft); color: var(--accent);
+    padding: 4px 12px; border-radius: 20px;
+    font-size: 0.78rem; font-weight: 500;
+  }
+  .skill-tag.empty {
+    background: var(--border); color: var(--text-light);
+    border: 1px dashed var(--border);
+  }
+
+  /* ── EXPERIENCE ── */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+    width: 2px; background: var(--border);
+  }
+  .timeline-item { position: relative; margin-bottom: 40px; }
+  .timeline-dot {
+    position: absolute; left: -28px; top: 6px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--accent); border: 3px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .timeline-date { font-size: 0.75rem; font-weight: 600; color: var(--accent); letter-spacing: 1px; margin-bottom: 6px; }
+  .timeline-role { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; }
+  .timeline-company { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 10px; }
+  .timeline-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+  .timeline-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .timeline-tag {
+    background: var(--accent-soft); color: var(--accent);
+    padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 500;
+  }
+  .empty-state {
+    background: var(--card); border: 2px dashed var(--border);
+    border-radius: var(--radius); padding: 32px;
+    text-align: center; color: var(--text-light);
+    font-size: 0.88rem;
+  }
+  .empty-state strong { display: block; color: var(--text-muted); margin-bottom: 4px; }
+
+  /* ── PROJECTS ── */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px;
+    box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; flex-direction: column;
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(200,80,26,0.12); }
+  .project-num { font-size: 0.75rem; font-weight: 700; color: var(--accent-2); letter-spacing: 2px; margin-bottom: 10px; }
+  .project-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 10px; }
+  .project-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; flex: 1; margin-bottom: 16px; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .project-tag { background: var(--accent-soft); color: var(--accent); padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 500; }
+  .project-links { display: flex; gap: 10px; }
+  .project-link {
+    font-size: 0.8rem; font-weight: 600; color: var(--accent);
+    text-decoration: none; display: flex; align-items: center; gap: 5px;
+    transition: opacity 0.2s;
+  }
+  .project-link:hover { opacity: 0.7; }
+
+  /* ── EDUCATION ── */
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .edu-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px;
+    box-shadow: var(--shadow);
+  }
+  .edu-degree { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+  .edu-college { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 4px; }
+  .edu-year { font-size: 0.8rem; font-weight: 600; color: var(--accent); }
+
+  /* ── CERTIFICATIONS ── */
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .cert-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px;
+    display: flex; align-items: center; gap: 16px;
+    box-shadow: var(--shadow);
+  }
+  .cert-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--accent-soft); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; flex-shrink: 0;
+  }
+  .cert-name { font-weight: 600; font-size: 0.88rem; }
+  .cert-issuer { font-size: 0.78rem; color: var(--text-muted); }
+
+  /* ── PUBLICATIONS ── */
+  .pub-list { display: flex; flex-direction: column; gap: 16px; }
+  .pub-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px 26px;
+    box-shadow: var(--shadow);
+  }
+  .pub-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+  .pub-meta { font-size: 0.8rem; color: var(--text-muted); }
+
+  /* ── GITHUB ── */
+  .github-section {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px;
+    text-align: center; box-shadow: var(--shadow);
+  }
+  .github-img { max-width: 100%; border-radius: 8px; opacity: 0.6; }
+  .github-placeholder {
+    font-size: 0.88rem; color: var(--text-light);
+    margin-top: 16px;
+  }
+
+  /* ── BLOG ── */
+  .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .blog-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px;
+    box-shadow: var(--shadow);
+  }
+  .blog-date { font-size: 0.75rem; color: var(--text-light); margin-bottom: 8px; }
+  .blog-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; }
+  .blog-excerpt { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .testimonial-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px;
+    box-shadow: var(--shadow); position: relative;
+  }
+  .testimonial-quote {
+    font-size: 3rem; color: var(--accent); line-height: 1;
+    font-family: Georgia, serif; margin-bottom: 8px;
+  }
+  .testimonial-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+  .testimonial-author { font-weight: 600; font-size: 0.88rem; }
+  .testimonial-role { font-size: 0.78rem; color: var(--text-light); }
+
+  /* ── HOBBIES ── */
+  .hobbies-grid { display: flex; flex-wrap: wrap; gap: 14px; }
+  .hobby-pill {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 50px; padding: 12px 22px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.9rem; font-weight: 500; color: var(--text);
+    box-shadow: var(--shadow);
+  }
+  .hobby-pill span { font-size: 1.3rem; }
+
+  /* ── AWARDS ── */
+  .awards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .award-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px;
+    display: flex; gap: 16px; align-items: flex-start;
+    box-shadow: var(--shadow);
+  }
+  .award-icon { font-size: 1.8rem; flex-shrink: 0; }
+  .award-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
+  .award-desc { font-size: 0.8rem; color: var(--text-muted); }
+
+  /* ── LANGUAGES ── */
+  .lang-grid { display: flex; flex-wrap: wrap; gap: 14px; }
+  .lang-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 22px;
+    text-align: center; min-width: 100px;
+    box-shadow: var(--shadow);
+  }
+  .lang-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
+  .lang-level { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* ── RESUME ── */
+  .resume-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 40px;
+    text-align: center; box-shadow: var(--shadow);
+  }
+  .resume-icon { font-size: 3rem; margin-bottom: 16px; }
+  .resume-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.4rem; margin-bottom: 8px; }
+  .resume-sub { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px; }
+
+  /* ── CONTACT ── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .contact-info { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item {
+    display: flex; gap: 16px; align-items: center;
+  }
+  .contact-icon {
+    width: 46px; height: 46px; border-radius: 12px;
+    background: var(--accent-soft); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .contact-label { font-size: 0.75rem; color: var(--text-light); margin-bottom: 2px; }
+  .contact-value { font-weight: 500; font-size: 0.95rem; }
+  .contact-value a { color: var(--text); text-decoration: none; }
+  .contact-value a:hover { color: var(--accent); }
+  .social-links { display: flex; gap: 12px; margin-top: 8px; }
+  .social-btn {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--card); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; text-decoration: none; color: var(--text);
+    transition: all 0.2s; box-shadow: var(--shadow);
+  }
+  .social-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-3px); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 14px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+  .form-group input, .form-group textarea {
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 16px; font-family: 'Inter', sans-serif;
+    font-size: 0.9rem; background: var(--bg); color: var(--text);
+    outline: none; transition: border-color 0.2s;
+    resize: vertical;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--text); color: rgba(255,255,255,0.6);
+    text-align: center; padding: 32px;
+    font-size: 0.85rem;
+  }
+  footer strong { color: #fff; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    #hero { flex-direction: column; text-align: center; align-items: center; padding-top: 120px; }
+    .hero-greeting { justify-content: center; }
+    .hero-btns { justify-content: center; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    section { padding: 64px 5vw; }
+  }
+
+  /* ── SCROLL FADE ── */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.5s, transform 0.5s; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AV.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-text fade-in">
+    <div class="hero-greeting">Hello, I'm</div>
+    <h1 class="hero-name">Andhavarapu<br/><span>Vamsi</span></h1>
+    <p class="hero-tagline">Automotive Embedded Engineer crafting reliable, real-time software for the vehicles of tomorrow.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-visual fade-in">
+    <div class="hero-avatar">AV</div>
+    <div class="hero-stat-row">
+      <div class="hero-badge"><strong id="exp-years">—</strong>Years Exp.</div>
+      <div class="hero-badge"><strong>0</strong>Projects</div>
+      <div class="hero-badge"><strong>0</strong>Certs</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label fade-in">About Me</div>
+  <h2 class="section-title fade-in">The person behind the code</h2>
+  <div class="divider fade-in"></div>
+  <div class="about-grid fade-in">
+    <div class="about-bio">
+      <p>Hi! I'm Vamsi — an Automotive Embedded Engineer passionate about building the low-level software that powers modern vehicles. I work at the intersection of hardware and software, turning requirements into reliable, real-time embedded systems.</p>
+      <p><!-- Add more about yourself here — your story, what drives you, your passion for automotive tech --></p>
+      <p>When I'm not writing firmware, I enjoy exploring new technologies and keeping up with trends in the automotive industry.</p>
+    </div>
+    <div class="about-info">
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">Location</div>
+          <div class="info-value">India <Vizianagram , Andhra Pradesh></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">💼</div>
+        <div>
+          <div class="info-label">Role</div>
+          <div class="info-value">Automotive Embedded Engineer</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🎓</div>
+        <div>
+          <div class="info-label">Education</div>
+          <div class="info-value"><B.Tech, Electronics and Communication Engineering ></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📧</div>
+        <div>
+          <div class="info-label">Email</div>
+          <div class="info-value"><vamsiandhavarapu1513@gmail.com></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">✅</div>
+        <div>
+          <div class="info-label">Status</div>
+          <div class="info-value" style="color:var(--accent)">Open to Opportunities</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label fade-in">Skills</div>
+  <h2 class="section-title fade-in">Technical Expertise</h2>
+  <div class="divider fade-in"></div>
+  <div class="skills-grid">
+
+    <div class="skill-card fade-in">
+      <div class="skill-card-title"><div class="skill-card-icon">💻</div>Programming Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Embeeded C</span>
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag empty">+ Add more</span>
+      </div>
+    </div>
+
+    <div class="skill-card fade-in">
+      <div class="skill-card-title"><div class="skill-card-icon">🔗</div>Protocols & Interfaces</div>
+      <div class="skill-tags">
+        <span class="skill-tag">CAN</span>
+        <span class="skill-tag">LIN</span>
+        <span class="skill-tag">SPI</span>
+        <span class="skill-tag">I2C</span>
+        <span class="skill-tag">UART</span>
+        <span class="skill-tag">ETHERNET</span>
+        <span class="skill-tag">FLEXRAY</span>
+        <span class="skill-tag empty">+ Add more</span>
+      </div>
+    </div>
+
+    <div class="skill-card fade-in">
+      <div class="skill-card-title"><div class="skill-card-icon">🚗</div>Automotive Standards</div>
+      <div class="skill-tags">
+        <span class="skill-tag">AUTOSAR</span>
+        <span class="skill-tag">ISO 26262</span>
+        <span class="skill-tag">MISRA C</span>
+        <span class="skill-tag empty">+ Add more</span>
+      </div>
+    </div>
+
+    <div class="skill-card fade-in">
+      <div class="skill-card-title"><div class="skill-card-icon">🛠️</div>Tools & Software</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Davinci Configurator</span>
+        <span class="skill-tag">CANoe</span>
+        <span class="skill-tag">CANalyzer</span>
+        <span class="skill-tag">MATLAB</span>
+        <span class="skill-tag">Simulink</span>
+        <span class="skill-tag">Jira</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">Visual Studio</span>
+        <span class="skill-tag">PReeVision</span>
+        <span class="skill-tag">Trace 32</span>
+        <span class="skill-tag empty">+ Add more</span>
+      </div>
+    </div>
+
+    <div class="skill-card fade-in">
+      <div class="skill-card-title"><div class="skill-card-icon">⚙️</div>RTOS & OS</div>
+      <div class="skill-tags">
+        <span class="skill-tag">FreeRTOS</span>
+        <span class="skill-tag empty">+ Add more</span>
+      </div>
+    </div>
+
+    <div class="skill-card fade-in">
+      <div class="skill-card-title"><div class="skill-card-icon">🧪</div>Testing & Debugging</div>
+      <div class="skill-tags">
+        <span class="skill-tag empty">+ Add your testing tools</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label fade-in">Experience</div>
+  <h2 class="section-title fade-in">Work History</h2>
+  <div class="divider fade-in"></div>
+  <div class="timeline fade-in">
+
+    <!-- ADD YOUR EXPERIENCE HERE -->
+    <div class="empty-state">
+      <strong>🏢 3.1 Years </strong>
+      Working in KPIT Technologies and deputed to Mercedes Benz India 
+      Project: In vehicle Networking
+    </div>
+
+    <!-- EXAMPLE (uncomment and fill):
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">JAN 2023 – PRESENT</div>
+      <div class="timeline-role">Embedded Software Engineer</div>
+      <div class="timeline-company">Company Name · City</div>
+      <div class="timeline-desc">Describe your key responsibilities and achievements here.</div>
+      <div class="timeline-tags">
+        <span class="timeline-tag">C</span>
+        <span class="timeline-tag">CAN</span>
+        <span class="timeline-tag">AUTOSAR</span>
+      </div>
+    </div>
+    -->
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label fade-in">Projects</div>
+  <h2 class="section-title fade-in">What I've Built</h2>
+  <p class="section-sub fade-in">A showcase of my technical projects — from personal builds to professional work.</p>
+  <div class="projects-grid">
+
+    <!-- ADD YOUR PROJECTS HERE -->
+    <div class="project-card fade-in" style="border: 2px dashed var(--border); background: var(--bg); align-items: center; justify-content: center; text-align: center; color: var(--text-muted); min-height: 220px;">
+      <div style="font-size:2rem; margin-bottom:12px;">🚗</div>
+      <strong style="color:var(--text)">Your first project</strong>
+      <p style="font-size:0.85rem; margin-top:8px;">Add your project name, description, tech stack, and GitHub link here.</p>
+    </div>
+
+    <!-- EXAMPLE (uncomment and fill):
+    <div class="project-card fade-in">
+      <div class="project-num">PROJECT 01</div>
+      <div class="project-title">CAN Bus Data Logger</div>
+      <div class="project-desc">A real-time data logger for CAN bus networks built on STM32. Captures, filters, and stores vehicle network data for diagnostics.</div>
+      <div class="project-tags">
+        <span class="project-tag">C</span>
+        <span class="project-tag">STM32</span>
+        <span class="project-tag">CAN</span>
+        <span class="project-tag">FreeRTOS</span>
+      </div>
+      <div class="project-links">
+        <a href="#" class="project-link">⬡ GitHub</a>
+        <a href="#" class="project-link">↗ Live Demo</a>
+      </div>
+    </div>
+    -->
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label fade-in">Education</div>
+  <h2 class="section-title fade-in">Academic Background</h2>
+  <div class="divider fade-in"></div>
+  <div class="edu-grid">
+
+    <div class="edu-card fade-in" style="border: 2px dashed var(--border); background: var(--bg); color: var(--text-muted);">
+      <div class="edu-degree">🎓 Add your degree</div>
+      <div class="edu-college">College / University Name</div>
+      <div class="edu-year">Year of Graduation</div>
+    </div>
+
+    <!-- EXAMPLE (uncomment and fill):
+    <div class="edu-card fade-in">
+      <div class="edu-degree">B.Tech in Electronics & Communication</div>
+      <div class="edu-college">Your University Name</div>
+      <div class="edu-year">2019 – 2023</div>
+    </div>
+    -->
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label fade-in">Certifications</div>
+  <h2 class="section-title fade-in">Licenses & Credentials</h2>
+  <div class="divider fade-in"></div>
+  <div class="certs-grid">
+
+    <div class="cert-card fade-in" style="border: 2px dashed var(--border); background: var(--bg);">
+      <div class="cert-icon">🏅</div>
+      <div>
+        <div class="cert-name">Add your first certification</div>
+        <div class="cert-issuer">Issuing Organization</div>
+      </div>
+    </div>
+
+    <!-- EXAMPLE (uncomment and fill):
+    <div class="cert-card fade-in">
+      <div class="cert-icon">🏅</div>
+      <div>
+        <div class="cert-name">AUTOSAR Certified Developer</div>
+        <div class="cert-issuer">AUTOSAR GmbH · 2023</div>
+      </div>
+    </div>
+    -->
+  </div>
+</section>
+
+<!-- PUBLICATIONS & PATENTS -->
+<section id="publications">
+  <div class="section-label fade-in">Research</div>
+  <h2 class="section-title fade-in">Publications & Patents</h2>
+  <div class="divider fade-in"></div>
+  <div class="pub-list">
+    <div class="empty-state fade-in">
+      <strong>📄 Add your publications or patents</strong>
+      Have you written a research paper, conference paper, or filed a patent? Add it here.
+    </div>
+
+    <!-- EXAMPLE (uncomment and fill):
+    <div class="pub-card fade-in">
+      <div class="pub-title">Title of Your Research Paper</div>
+      <div class="pub-meta">Conference/Journal Name · Year · DOI or Link</div>
+    </div>
+    -->
+  </div>
+</section>
+
+<!-- TALKS -->
+<section id="talks">
+  <div class="section-label fade-in">Speaking</div>
+  <h2 class="section-title fade-in">Talks & Presentations</h2>
+  <div class="divider fade-in"></div>
+  <div class="empty-state fade-in">
+    <strong>🎤 Add your talks</strong>
+    Have you spoken at conferences, colleges, or webinars? Add them here.
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards">
+  <div class="section-label fade-in">Recognition</div>
+  <h2 class="section-title fade-in">Awards & Achievements</h2>
+  <div class="divider fade-in"></div>
+  <div class="awards-grid">
+    <div class="award-card fade-in" style="border: 2px dashed var(--border); background: var(--bg);">
+      <div class="award-icon">🏆</div>
+      <div>
+        <div class="award-title">Add your award or achievement</div>
+        <div class="award-desc">Hackathon, recognition, ranking, or competition result.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN SOURCE -->
+<section id="opensource">
+  <div class="section-label fade-in">Open Source</div>
+  <h2 class="section-title fade-in">Contributions</h2>
+  <div class="divider fade-in"></div>
+  <div class="github-section fade-in">
+    <div style="font-size:3rem; margin-bottom:12px;">🐙</div>
+    <div style="font-weight:600; margin-bottom:8px;">GitHub Activity</div>
+    <div class="github-placeholder">
+      Add your GitHub username to show live contribution graphs and open source work here.<br/>
+      <strong>github.com/<!-- your-username --></strong>
+    </div>
+    <div style="margin-top:20px;">
+      <a href="#" class="btn-primary" style="font-size:0.85rem; padding:10px 22px;">View GitHub Profile</a>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="section-label fade-in">Writing</div>
+  <h2 class="section-title fade-in">Blog & Articles</h2>
+  <div class="divider fade-in"></div>
+  <div class="blog-grid">
+    <div class="blog-card fade-in" style="border: 2px dashed var(--border); background: var(--bg);">
+      <div class="blog-date">Coming soon</div>
+      <div class="blog-title">✍️ Your first article</div>
+      <div class="blog-excerpt">Do you write about embedded systems, automotive tech, or tutorials? Add your articles here.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-label fade-in">Testimonials</div>
+  <h2 class="section-title fade-in">What People Say</h2>
+  <div class="divider fade-in"></div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card fade-in" style="border: 2px dashed var(--border); background: var(--bg);">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-text">Add a quote from a colleague, manager, or professor who can vouch for your work.</div>
+      <div class="testimonial-author">Their Name</div>
+      <div class="testimonial-role">Their Role · Company</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOBBIES -->
+<section id="hobbies">
+  <div class="section-label fade-in">Beyond Work</div>
+  <h2 class="section-title fade-in">Hobbies & Interests</h2>
+  <div class="divider fade-in"></div>
+  <div class="hobbies-grid fade-in">
+    <div class="hobby-pill"><span>🚗</span> Automotive</div>
+    <div class="hobby-pill"><span>⚡</span> Electronics</div>
+    <div class="hobby-pill"><span>Add yours</span></div>
+    <!-- Add more hobbies here -->
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section id="languages">
+  <div class="section-label fade-in">Languages</div>
+  <h2 class="section-title fade-in">Spoken Languages</h2>
+  <div class="divider fade-in"></div>
+  <div class="lang-grid fade-in">
+    <div class="lang-card">
+      <div class="lang-name">Telugu</div>
+      <div class="lang-level">Native</div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-name">English</div>
+      <div class="lang-level">Professional</div>
+    </div>
+    <!-- Add more languages here -->
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+  <div class="resume-box fade-in">
+    <div class="resume-icon">📄</div>
+    <div class="resume-title">Download My Resume</div>
+    <div class="resume-sub">Get a quick overview of my skills, experience, and projects in a single PDF.</div>
+    <a href="#" class="btn-primary">Download Resume (PDF)</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label fade-in">Contact</div>
+  <h2 class="section-title fade-in">Let's Connect</h2>
+  <p class="section-sub fade-in">Open to opportunities, collaborations, and interesting conversations about automotive embedded systems.</p>
+  <div class="contact-grid fade-in">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value"><a href="mailto:your@email.com">your@email.com</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">Location</div>
+          <div class="contact-value">India</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🔗</div>
+        <div>
+          <div class="contact-label">Social</div>
+          <div class="social-links">
+            <a href="#" class="social-btn" title="LinkedIn">in</a>
+            <a href="#" class="social-btn" title="GitHub">⬡</a>
+            <a href="#" class="social-btn" title="Twitter">𝕏</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="John Doe"/>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="john@example.com"/>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea rows="5" placeholder="Tell me about your project or opportunity..."></textarea>
+      </div>
+      <button class="btn-primary" style="border:none; cursor:pointer; font-size:0.9rem;">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Designed & Built by <strong>Andhavarapu Vamsi</strong> · Automotive Embedded Engineer</p>
+  <p style="margin-top:6px; font-size:0.78rem;">© 2025 · Made with ❤️ and lots of C code</p>
+</footer>
+
+<script>
+  // Scroll fade-in
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); }});
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
